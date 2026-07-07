@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Dog Recanto da Ilha - Em Breve</title>
+    <title>Hotel Dog Recanto da Ilha - Em Breve!</title>
     <style>
-        /* --- Variáveis de Cores (Baseadas na Logo) --- */
+        /* --- Paleta de Cores Baseada na Logo --- */
         :root {
-            --bg-color: #111111;
-            --orange: #f27420;
+            --bg-dark: #121212;
+            --orange-main: #f27420;
             --green-light: #9ece3c;
             --green-dark: #009640;
             --text-white: #ffffff;
         }
 
-        /* --- Estilos Gerais --- */
+        /* --- Configurações Gerais --- */
         * {
             margin: 0;
             padding: 0;
@@ -22,195 +22,234 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Montserrat', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-white);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
-            /* Altera o cursor padrão para uma imagem de patinha (SVG inline) */
+            padding: 1.5rem;
+            
+            /* Cursor customizado de patinha (SVG inline) */
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23f27420'><path d='M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 4s3-2 3-4c0-1.66-1.34-3-3-3zm-4.5-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm9 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-9.5-4c.83 0 1.5-.67 1.5-1.5S7.83 5 7 5s-1.5.67-1.5 1.5S6.17 7 7 7zm10 0c.83 0 1.5-.67 1.5-1.5S17.83 5 17 5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z'/></svg>") 16 16, auto;
         }
 
-        /* Fundo com leve textura/gradiente sutil para profundidade */
+        /* Efeito de iluminação no fundo */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(40,40,40,1) 0%, rgba(17,17,17,1) 80%);
+            background: radial-gradient(circle, rgba(35,35,35,1) 0%, rgba(18,18,18,1) 80%);
             z-index: 1;
         }
 
-        /* --- Container Principal --- */
-        .container {
+        /* --- Container Principal (Responsivo) --- */
+        .main-container {
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 2rem;
-            max-width: 600px;
+            max-width: 750px;
             width: 100%;
+            animation: fadeIn 1s ease-out;
         }
 
-        /* --- Área da Logo --- */
-        .logo-wrapper {
-            margin-bottom: 2.5rem;
+        /* --- Texto Superior (Divertido) --- */
+        .top-text {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--green-light);
+            text-shadow: 2px 3px 0px rgba(0,0,0,0.5);
+            margin-bottom: 1.5rem;
+            animation: bounce 3s infinite ease-in-out;
+        }
+
+        @media (max-width: 480px) {
+            .top-text { font-size: 1.5rem; }
+        }
+
+        /* --- Box da Logo --- */
+        .logo-box {
             position: relative;
+            margin-bottom: 2rem;
             display: inline-block;
         }
 
-        /* Efeito de brilho pulsante atrás da logo baseado nas cores do hotel */
-        .logo-wrapper::after {
+        /* Brilho neon de fundo alternando cores */
+        .logo-box::after {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 120%; height: 120%;
-            background: linear-gradient(45deg, var(--orange), var(--green-light));
-            filter: blur(50px);
-            opacity: 0.15;
+            width: 110%; height: 110%;
+            background: linear-gradient(45deg, var(--orange-main), var(--green-dark));
+            filter: blur(40px);
+            opacity: 0.2;
             border-radius: 50%;
             z-index: -1;
-            animation: pulse 4s infinite alternate;
+            animation: pulseGlow 4s infinite alternate ease-in-out;
         }
 
         .logo-img {
-            max-width: 280px;
+            max-width: 100%;
             height: auto;
-            /* Substitua pelo caminho real da sua imagem otimizada */
-            border-radius: 12px; 
-            transition: transform 0.5s ease;
+            width: 380px; /* Tamanho ideal para desktop */
+            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.6));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Pequena reação da logo ao passar o mouse perto */
-        .logo-wrapper:hover .logo-img {
-            transform: scale(1.03) rotate(1deg);
+        /* Interação alegre ao passar o mouse perto da logo */
+        .logo-box:hover .logo-img {
+            transform: scale(1.05) rotate(-2deg);
         }
 
-        /* --- Texto "Em Breve" --- */
-        .message-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 2rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            animation: fadeInUp 1.2s ease-out;
+        @media (max-width: 480px) {
+            .logo-img { width: 260px; }
         }
 
-        .message-box p {
-            font-size: 1.25rem;
+        /* --- Card de Texto Inferior --- */
+        .bottom-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px dashed rgba(158, 206, 60, 0.2); /* Borda tracejada divertida */
+            padding: 2rem 2.5rem;
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            max-width: 90%;
+        }
+
+        .bottom-text {
+            font-size: 1.3rem;
             line-height: 1.6;
-            font-weight: 400;
-            letter-spacing: 0.5px;
+            font-weight: 500;
+            color: var(--text-white);
         }
 
-        /* Destaque colorido para o nome do hotel */
-        .brand-highlight {
+        /* Destaca a última frase com degradê da marca */
+        .highlight-phrase {
             display: block;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             font-weight: 700;
-            background: linear-gradient(to right, var(--orange), var(--green-light));
+            background: linear-gradient(135deg, var(--orange-main), var(--green-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.4rem;
         }
 
-        /* --- Efeito das Pegadas (Geradas por JS) --- */
-        .paw-print {
+        @media (max-width: 480px) {
+            .bottom-card { padding: 1.5rem; }
+            .bottom-text { font-size: 1.1rem; }
+        }
+
+        /* --- Elemento das Pegadas (Geradas por JS) --- */
+        .paw-trail {
             position: absolute;
-            width: 24px;
-            height: 24px;
-            pointer-events: none; /* Garante que não trava o clique do mouse */
+            width: 26px;
+            height: 26px;
+            pointer-events: none;
             z-index: 2;
-            opacity: 0.45;
+            opacity: 0;
             transform: translate(-50%, -50%);
-            animation: fadeOutTrail 3s forwards ease-in;
+            animation: printLife 3s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
         }
 
-        /* --- Animações --- */
-        @keyframes pulse {
-            0% { opacity: 0.1; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 0.22; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+        /* --- Animações CSS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* A pegada dura firme e começa a sumir (fade-out) em direção aos 3 segundos */
-        @keyframes fadeOutTrail {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-            15% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            70% { opacity: 0.5; } /* Fica visível até 70% do tempo (aprox 2.1s) */
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); } /* Some totalmente em 3s */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* Animação que dita os 3 segundos exatos da pegada */
+        @keyframes printLife {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+            10% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            75% { opacity: 0.6; } /* Segura a opacidade até 2.2 segundos */
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); } /* Desaparece suavemente em 3s */
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-wrapper">
-            <img src="logo.png" alt="Hotel Dog Recanto da Ilha" class="logo-img">
+    <div class="main-container">
+        <h1 class="top-text">Au au! Estamos trabalhando!!!</h1>
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo Hotel Dog Recanto da Ilha" class="logo-img">
         </div>
 
-        <div class="message-box">
-            <p>
-                Estamos trabalhando para você ter a melhor experiência! 
-                <span class="brand-highlight">Em breve, um novo website do Hotel Dog Recanto da Ilha</span>
+        <div class="bottom-card">
+            <p class="bottom-text">
+                Estamos renovando nosso site e em breve 
+                <span class="highlight-phrase">vocês terão uma experiência especial!</span>
             </p>
         </div>
     </div>
 
-    /* --- Lógica das Pegadas Dinâmicas --- */
     <script>
         let lastX = 0;
         let lastY = 0;
-        const distanceThreshold = 40; // Distância em pixels para soltar a próxima pegada (evita acumular demais)
-        let isLeftPaw = true; // Alterna entre pata esquerda e direita para parecer que está andando
+        const minimumDistance = 45; // Distância em pixels para criar a próxima pegada
+        let leftStep = true; 
 
-        document.addEventListener('mousemove', (e) => {
-            const currentX = e.clientX;
-            const currentY = e.clientY;
+        document.addEventListener('mousemove', (event) => {
+            const currentX = event.clientX;
+            const currentY = event.clientY;
 
-            // Calcula a distância do último ponto para criar um rastro espaçado natural
-            const distance = Math.hypot(currentX - lastX, currentY - lastY);
+            // Mede a distância percorrida pelo mouse
+            const walkedDistance = Math.hypot(currentX - lastX, currentY - lastY);
 
-            if (distance > distanceThreshold) {
-                createPawPrint(currentX, currentY);
+            if (walkedDistance > minimumDistance) {
+                spawnPaw(currentX, currentY);
                 lastX = currentX;
                 lastY = currentY;
             }
         });
 
-        function createPawPrint(x, y) {
-            const paw = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            paw.setAttribute("class", "paw-print");
-            paw.setAttribute("viewBox", "0 0 24 24");
+        function spawnPaw(x, y) {
+            const svgNS = "http://www.w3.org/2000/svg";
+            const pawSvg = document.createElementNS(svgNS, "svg");
             
-            // Define a cor da pegada alternando sutilmente entre o verde e o laranja da marca
-            const color = isLeftPaw ? '#9ece3c' : '#f27420';
+            pawSvg.setAttribute("class", "paw-trail");
+            pawSvg.setAttribute("viewBox", "0 0 24 24");
             
-            // SVG Interno da Patinha
-            paw.innerHTML = `<path fill="${color}" d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 4s3-2 3-4c0-1.66-1.34-3-3-3zm-4.5-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm9 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-9.5-4c.83 0 1.5-.67 1.5-1.5S7.83 5 7 5s-1.5.67-1.5 1.5S6.17 7 7 7zm10 0c.83 0 1.5-.67 1.5-1.5S17.83 5 17 5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"/>`;
+            // Alterna a cor entre o Verde Limão e o Laranja vibrante da logo
+            const stepColor = leftStep ? '#9ece3c' : '#f27420';
+            
+            // Desenho em vetor da patinha de cachorro
+            pawSvg.innerHTML = `<path fill="${stepColor}" d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 4s3-2 3-4c0-1.66-1.34-3-3-3zm-4.5-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm9 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-9.5-4c.83 0 1.5-.67 1.5-1.5S7.83 5 7 5s-1.5.67-1.5 1.5S6.17 7 7 7zm10 0c.83 0 1.5-.67 1.5-1.5S17.83 5 17 5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"/>`;
 
-            // Posicionamento
-            paw.style.left = `${x}px`;
-            paw.style.top = `${y}px`;
+            // Posiciona no local exato do cursor
+            pawSvg.style.left = `${x}px`;
+            pawSvg.style.top = `${y}px`;
 
-            // Efeito de caminhada: rotaciona levemente para a esquerda ou direita dependendo do passo
-            const angle = isLeftPaw ? -15 : 15;
-            paw.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-            isLeftPaw = !isLeftPaw; // Alterna o pé
+            // Inclina levemente para simular passos esquerdo/direito
+            const stepAngle = leftStep ? -20 : 20;
+            pawSvg.style.transform = `translate(-50%, -50%) rotate(${stepAngle}deg)`;
+            
+            // Inverte para o próximo passo
+            leftStep = !leftStep; 
 
-            document.body.appendChild(paw);
+            document.body.appendChild(pawSvg);
 
-            // Remove o elemento do HTML após 3 segundos (tempo exato da animação CSS acabar)
+            // Deleta o elemento após 3 segundos para manter o navegador leve
             setTimeout(() => {
-                paw.remove();
+                pawSvg.remove();
             }, 3000);
         }
     </script>
