@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Dog - Em Manutenção</title>
+    <title>Hotel Dog Guriri - Estamos em Manutenção</title>
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@300;400;600&display=swap" rel="family">
+    <!-- Font Awesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* --- Configurações de Cores e Estilo Geral --- */
         :root {
-            --orange: #f27420;
-            --green: #9ece3c;
-            --dark-overlay: rgba(18, 18, 18, 0.75);
-            --card-bg: rgba(255, 255, 255, 0.06);
+            --primary-color: #f39c12; /* Laranja caloroso / Sol */
+            --secondary-color: #2980b9; /* Azul Mar */
+            --accent-color: #e67e22; /* Tom complementar */
+            --text-dark: #2c3e50;
+            --white: #ffffff;
         }
 
         * {
@@ -21,233 +27,214 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
             position: relative;
+            background: #f0f8ff;
         }
 
-        /* --- Fundo com Imagens de Cachorros --- */
-        /* Utiliza uma imagem pública de alta qualidade de cães correndo felizes */
-        .bg-background {
+        /* Carrossel de Fundo (Imagens Praianas) */
+        .bg-slider {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=1920');
+            z-index: -1;
+        }
+
+        .bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
-            filter: blur(8px) scale(1.05); /* Desfoque para dar foco ao centro */
-            z-index: 1;
+            animation: fadeSlider 16s infinite ease-in-out;
+            opacity: 0;
         }
 
-        /* Camada escura para garantir que os textos fiquem perfeitamente legíveis */
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(18,18,18,0.6) 0%, var(--dark-overlay) 100%);
-            z-index: 2;
+        /* Alternância das imagens de cachorros na praia */
+        .bg-slide:nth-child(1) {
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=1920');
+            animation-delay: 0s;
+        }
+        .bg-slide:nth-child(2) {
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&q=80&w=1920');
+            animation-delay: 4s;
+        }
+        .bg-slide:nth-child(3) {
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&q=80&w=1920');
+            animation-delay: 8s;
+        }
+        .bg-slide:nth-child(4) {
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1920');
+            animation-delay: 12s;
         }
 
-        /* --- Conteúdo Principal (Centralizado) --- */
-        .container {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 2.5rem 2rem;
-            max-width: 650px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: containerEntrance 1.2s ease-out;
+        @keyframes fadeSlider {
+            0%, 20% { opacity: 1; }
+            25%, 95% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* --- Texto Superior --- */
-        .top-text {
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--green);
-            text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.4);
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
-            animation: floatText 4s ease-in-out infinite;
-        }
-
-        /* --- Área da Logo --- */
-        .logo-wrapper {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        /* Efeito de brilho pulsante sutil atrás da logo */
-        .logo-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        /* Container Central (Glassmorphism) */
+        .maintenance-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 3rem 2rem;
+            border-radius: 24px;
             width: 90%;
-            height: 90%;
-            background: linear-gradient(45deg, var(--orange), var(--green));
-            filter: blur(35px);
-            opacity: 0.3;
-            border-radius: 50%;
-            z-index: -1;
-            animation: pulseGlow 3s infinite alternate ease-in-out;
+            max-width: 550px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(0);
+            animation: float 6s ease-in-out infinite;
         }
 
-        .logo-img {
-            max-width: 100%;
-            height: auto;
-            width: 340px; /* Tamanho ideal para destaque */
-            filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.5));
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
-        /* Interação ao passar o mouse perto da logo */
-        .logo-wrapper:hover .logo-img {
-            transform: scale(1.04) rotate(-1deg);
-        }
-
-        /* --- Texto Inferior --- */
-        .bottom-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.8rem 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            margin-bottom: 2.5rem;
+        /* Textos */
+        .top-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
         .bottom-text {
-            font-size: 1.3rem;
-            line-height: 1.5;
-            font-weight: 500;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-top: 1.5rem;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
-        /* Destaca o "Auuu!!!" com a cor laranja */
-        .bark-highlight {
-            color: var(--orange);
-            font-weight: 700;
-        }
-
-        /* --- Redes Sociais e Contatos --- */
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-        }
-
-        .btn-social {
+        /* Espaço da Logo */
+        .logo-wrapper {
+            margin: 1rem auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 55px;
-            height: 55px;
+            max-width: 220px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Redes Sociais e Links */
+        .social-links {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
+            color: var(--white);
+            font-size: 1.4rem;
             text-decoration: none;
-            font-size: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* Cores de hover personalizadas para cada botão */
-        .btn-social.instagram:hover {
-            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
-            border-color: transparent;
-            transform: translateY(-5px);
+        .social-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-btn.whatsapp { background-color: #25D366; }
+        .social-btn.email { background-color: var(--secondary-color); }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .btn-social.whatsapp:hover {
-            background-color: #25D366;
-            border-color: transparent;
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        /* Elementos Decorativos Extras (Pegadas) */
+        .paws-decor {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+            color: var(--primary-color);
+            opacity: 0.7;
         }
 
-        .btn-social.email:hover {
-            background-color: var(--orange);
-            border-color: transparent;
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(242, 116, 32, 0.4);
-        }
-
-        /* --- Responsividade (Telas Menores) --- */
+        /* Responsividade */
         @media (max-width: 480px) {
-            .top-text { font-size: 1.6rem; margin-bottom: 1.5rem; }
-            .logo-img { width: 250px; }
-            .bottom-card { padding: 1.2rem; }
-            .bottom-text { font-size: 1.1rem; }
-            .btn-social { width: 48px; height: 48px; font-size: 1.3rem; }
-        }
-
-        /* --- Animações --- */
-        @keyframes containerEntrance {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatText {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.95); }
-            100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.05); }
+            .top-text { font-size: 1.6rem; }
+            .bottom-text { font-size: 1rem; }
+            .maintenance-container { padding: 2rem 1.5rem; }
+            .social-btn { width: 45px; height: 45px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-background"></div>
-    <div class="bg-overlay"></div>
+    <!-- Carrossel de fundo animado via CSS -->
+    <div class="bg-slider">
+        <div class="bg-slide"></div>
+        <div class="bg-slide"></div>
+        <div class="bg-slide"></div>
+        <div class="bg-slide"></div>
+    </div>
 
-    <div class="container">
+    <!-- Bloco de Conteúdo Principal -->
+    <main class="maintenance-container">
         
         <h1 class="top-text">Au au! Estamos em manutenção!</h1>
-
+        
         <div class="logo-wrapper">
-            <img src="logo.png" alt="Hotel Dog" class="logo-img">
+            <!-- Sua imagem padrão configurada aqui -->
+            <img src="logo.png" alt="Hotel Dog Guriri" class="logo-img">
+        </div>
+        
+        <p class="bottom-text">Estamos criando um novo site, nos aguarde Auuu!!!</p>
+
+        <div class="paws-decor">
+            <i class="fa-solid fa-paw"></i>
+            <i class="fa-solid fa-paw" style="transform: translateY(-5px);"></i>
+            <i class="fa-solid fa-paw"></i>
         </div>
 
-        <div class="bottom-card">
-            <p class="bottom-text">
-                Estamos criando um novo site, nos aguarde <span class="bark-highlight">Auuu!!!</span>
-            </p>
-        </div>
-
+        <!-- Botões de Contato / Redes -->
         <div class="social-links">
-            <a href="https://www.instagram.com/hoteldogguriri/" target="_blank" rel="noopener" class="btn-social instagram" title="Siga nosso Instagram">
-                <i class="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/hoteldogguriri/" target="_blank" rel="noopener" class="social-btn instagram" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
             </a>
-            
-            <a href="https://wa.me/5527999967767" target="_blank" rel="noopener" class="btn-social whatsapp" title="Fale no WhatsApp">
-                <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/5527999967767" target="_blank" rel="noopener" class="social-btn whatsapp" title="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
             </a>
-            
-            <a href="mailto:contato@hoteldog.com.br" class="btn-social email" title="Envie um E-mail">
-                <i class="far fa-envelope"></i>
+            <a href="mailto:contato@hoteldog.com.br" class="social-btn email" title="E-mail">
+                <i class="fa-solid fa-envelope"></i>
             </a>
         </div>
 
-    </div>
+    </main>
 
 </body>
 </html>
